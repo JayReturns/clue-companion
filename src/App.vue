@@ -1,8 +1,5 @@
-<script setup lang="ts"></script>
-
 <template>
-  <h1>Hello World</h1>
-  <v-btn>Hey</v-btn>
+  <v-app id="clue">
+    <RouterView />
+  </v-app>
 </template>
-
-<style scoped></style>
