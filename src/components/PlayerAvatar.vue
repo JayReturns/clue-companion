@@ -1,15 +1,35 @@
 <script setup lang="ts">
-import { defineProps, ref } from 'vue';
+import { ref, watch } from 'vue';
+import type { Player } from '@/types/player';
 
+const emit = defineEmits(['update:name']);
 const props = defineProps<{
-  color: string;
+  editMode: boolean,
+  player: Player,
 }>();
 
-const style = ref<string>('color: ' + props.color);
+const style = ref<string>('color: ' + props.player.color);
+const localName = ref<string>(props.player.name);
+
+watch(() => props.player.name, (newVal) => {
+  localName.value = newVal;
+});
+
+const updateName = () => {
+  emit('update:name', localName.value);
+};
 
 </script>
 
 <template>
-  <!-- <v-avatar icon="$vuetify"></v-avatar> -->
-  <v-text-field variant="outlined" :color="color" :style="style"></v-text-field>
+  <v-text-field
+    v-if="editMode"
+    v-model="localName"
+    variant="outlined"
+    :color="props.player.color"
+    :style="style"
+    @update:model-value="updateName"/>
+  <div :style="style" v-else>
+    {{ localName }}
+  </div>
 </template>
