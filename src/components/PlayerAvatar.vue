@@ -8,7 +8,7 @@ const props = defineProps<{
   player: Player,
 }>();
 
-const style = ref<string>('color: ' + props.player.color);
+const style = ref<string>('background-color: ' + props.player.color + '; color: white');
 const localName = ref<string>(props.player.name);
 
 watch(() => props.player.name, (newVal) => {
@@ -29,7 +29,7 @@ const updateName = () => {
     :color="props.player.color"
     :style="style"
     @update:model-value="updateName"/>
-  <div :style="style" v-else>
+  <div :style="style" class="text-center" v-else>
     {{ localName }}
   </div>
 </template>
